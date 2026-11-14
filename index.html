@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hextech Team Forge — Création d'Équipe League of Legends</title>
+  <!-- Polices Hextech / League of Legends (Cinzel + Rajdhani) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ========================================================================
+       HEADER HEXTECH
+       ======================================================================== -->
+  <header class="hex-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-crest" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2" />
+            <circle cx="12" cy="12" r="3.5" fill="currentColor" />
+          </svg>
+        </div>
+        <div class="brand-titles">
+          <h1>Hextech Team Forge</h1>
+          <div class="brand-subtitle">Générateur de Custom &amp; Draft entre Potes</div>
+        </div>
+      </div>
+
+      <!-- Sélecteur de Mode : Custom 2 Équipes vs Draft à 5 -->
+      <nav class="mode-tabs" aria-label="Mode de jeu">
+        <button type="button" class="mode-tab active" data-mode="versus">
+          <span>⚔️</span> Custom 2 Équipes (3v3 à 5v5)
+        </button>
+        <button type="button" class="mode-tab" data-mode="squad5">
+          <span>🛡️</span> Draft à 5 (Rôles &amp; Compo)
+        </button>
+      </nav>
+
+      <div class="header-actions">
+        <button type="button" id="btn-toggle-sound" class="btn-icon-hex" title="Activer/Désactiver les effets sonores Hextech">
+          🔊 Son Hextech : ON
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       CONTENU PRINCIPAL
+       ======================================================================== -->
+  <main class="main-container">
+
+    <!-- 1. SECTION HAUTE : TABLEAU PRÉFAIT DES PSEUDOS -> LE FOURRE-TOUT -->
+    <section class="top-staging-grid">
+
+      <!-- COLONNE GAUCHE : RÉSERVE DE PSEUDOS (TABLEAU PRÉFAIT) -->
+      <div class="hex-panel">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-diamond"></span>
+            <h2 class="panel-title">Tableau des Potes (Réserve)</h2>
+            <span id="bench-count" class="panel-badge">0 dispo</span>
+          </div>
+          <div class="staging-toolbar">
+            <button type="button" id="btn-move-all-lobby" class="btn-hex-sm cyan" title="Envoyer jusqu'à 10 joueurs dans le Fourre-Tout">
+              Tout envoyer ➔
+            </button>
+            <button type="button" id="btn-reset-roster" class="btn-hex-sm" title="Réinitialiser avec le tableau préfait de js/data.js">
+              ↺ Défaut
+            </button>
+          </div>
+        </div>
+
+        <!-- Ajout rapide d'un nouveau pote au tableau -->
+        <form id="form-add-player" class="add-player-bar">
+          <input
+            type="text"
+            id="input-new-player"
+            class="hex-input"
+            placeholder="Ajouter un pseudo au tableau (ex: FakerDuDimanche)..."
+            maxlength="28"
+            autocomplete="off"
+          />
+          <button type="submit" class="btn-hex-sm">
+            + Ajouter
+          </button>
+        </form>
+
+        <!-- Zone Draggable de la réserve -->
+        <div id="bench-zone" class="drop-zone" aria-label="Réserve de pseudos disponibles"></div>
+
+        <div class="staging-footer-tip">
+          <span>💡 <strong>Glisse-dépose</strong> ou <strong>clique</strong> sur un pseudo pour l'envoyer dans le Fourre-Tout.</span>
+          <span>Modifiable aussi dans <code>js/data.js</code></span>
+        </div>
+      </div>
+
+      <!-- COLONNE DROITE : LE FOURRE-TOUT (LOBBY ACTIF) -->
+      <div class="hex-panel">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-diamond cyan"></span>
+            <h2 class="panel-title">Le Fourre-Tout (Joueurs Présents)</h2>
+            <span id="lobby-count" class="panel-badge cyan">0 / 10</span>
+          </div>
+          <div class="staging-toolbar">
+            <button type="button" id="btn-pick-5-random" class="btn-hex-sm" title="Prendre 5 joueurs au hasard">
+              🎲 Tirer 5 Potes
+            </button>
+            <button type="button" id="btn-clear-lobby" class="btn-hex-sm danger" title="Vider le Fourre-Tout">
+              ✕ Vider
+            </button>
+          </div>
+        </div>
+
+        <!-- Zone de Drop du Fourre-Tout -->
+        <div id="fourre-tout-zone" class="drop-zone fourre-tout-zone" aria-label="Le Fourre-Tout des joueurs sélectionnés"></div>
+
+        <div class="staging-footer-tip">
+          <span id="matchup-format-preview" class="matchup-preview-pill">
+            Glisse des pseudos ici (ex: 6 = 3v3, 8 = 4v4, 10 = 5v5)
+          </span>
+          <span>Clic sur un pseudo pour le retirer ↩</span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- 2. BARRE "PIMENTER LA PARTIE" & BOUTON LANCER L'ALÉATOIRE -->
+    <section class="hex-panel spice-control-panel">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <span class="panel-diamond"></span>
+          <h2 class="panel-title">Options &amp; Modificateurs pour Pimenter la Partie</h2>
+        </div>
+        <span style="font-size: 0.8rem; color: var(--text-muted);">
+          Active les options souhaitées avant de lancer l'aléatoire
+        </span>
+      </div>
+
+      <div class="spice-grid">
+        <div>
+          <!-- Cartes d'options activables -->
+          <div class="spice-options-list">
+
+            <div class="spice-toggle-card active" data-option="randomRoles">
+              <div class="spice-checkbox"></div>
+              <div class="spice-card-text">
+                <h4>Randomiser les Rôles</h4>
+                <p>Assigne Top, Jungle, Mid, Bot (ADC) et Support aléatoirement.</p>
+              </div>
+            </div>
+
+            <div class="spice-toggle-card" data-option="themeComp">
+              <div class="spice-checkbox"></div>
+              <div class="spice-card-text">
+                <h4>Compo à Thème</h4>
+                <p>Full Tank, Full Yordle, Full Néant, Demacia, Noxus, Full ADC, Full Grab...</p>
+              </div>
+            </div>
+
+            <div class="spice-toggle-card active" data-option="suggestChampions">
+              <div class="spice-checkbox"></div>
+              <div class="spice-card-text">
+                <h4>Suggérer un Champion</h4>
+                <p>Propose un champion aléatoire par joueur (adapté au thème si actif).</p>
+              </div>
+            </div>
+
+            <div class="spice-toggle-card" data-option="extraChallenge">
+              <div class="spice-checkbox"></div>
+              <div class="spice-card-text">
+                <h4>Règle / Gage Pimenté</h4>
+                <p>Ajoute un défi fun (Invade niv 1, Sans Flash, 5 TP, Président...).</p>
+              </div>
+            </div>
+
+            <div class="spice-toggle-card active" data-option="pickCaptains">
+              <div class="spice-checkbox"></div>
+              <div class="spice-card-text">
+                <h4>Désigner Capitaine</h4>
+                <p>Couronne 👑 un Shotcaller / Responsable de draft par équipe.</p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Sous-options de Compo à Thème (affichées quand Compo à Thème est coché) -->
+          <div id="theme-subsettings" class="theme-subsettings hidden">
+            <div class="filter-pill-group">
+              <span class="filter-label">Catégorie de Thèmes :</span>
+              <button type="button" class="filter-pill active" data-theme-cat="all">Tous (26 thèmes)</button>
+              <button type="button" class="filter-pill" data-theme-cat="region">🌍 Régions (Demacia, Noxus, Néant, Yordle...)</button>
+              <button type="button" class="filter-pill" data-theme-cat="class">🛡️ Classes (Full Tank, ADC, Mage, Assassin...)</button>
+              <button type="button" class="filter-pill" data-theme-cat="synergy">⚡ Synergies Fun (Full Grab, Knock-up, Global, Furtif...)</button>
+            </div>
+            <button type="button" id="btn-toggle-mirror-theme" class="filter-pill">
+              Mode : 1 Thème différent par équipe
+            </button>
+          </div>
+        </div>
+
+        <!-- Bouton Principal d'Action -->
+        <div class="cta-forge-wrapper">
+          <button type="button" id="btn-forge-teams" class="btn-hex-forge">
+            <span>🎲</span> LANCER L'ALÉATOIRE
+          </button>
+          <div class="secondary-actions-row">
+            <button type="button" id="btn-reroll-roles-only" class="btn-hex-sm" title="Garder les mêmes équipes mais remélanger uniquement les rôles">
+              🔄 Rôles seuls
+            </button>
+            <button type="button" id="btn-copy-discord" class="btn-hex-sm cyan" title="Copier le résultat formaté pour Discord">
+              📋 Copier Discord
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. BANNIÈRE DE RÈGLE / GAGE SPÉCIAL (SI ACTIVÉ) -->
+    <div id="global-challenge-banner" class="global-challenge-banner hidden">
+      <div class="challenge-content">
+        <div class="challenge-icon">🔥</div>
+        <div class="challenge-text">
+          <h4 id="challenge-title">RÈGLE PIMENTÉE</h4>
+          <p id="challenge-desc"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. ARÈNE DES ÉQUIPES (2 ÉQUIPES VIDES DE 5 JOUEURS) -->
+    <section id="arena-grid" class="arena-grid">
+
+      <!-- ÉQUIPE BLEUE (5 SLOTS) -->
+      <div id="blue-team-panel" class="hex-panel team-panel blue-side">
+        <div class="team-header">
+          <div class="team-title-wrap">
+            <div class="team-emblem">B</div>
+            <div>
+              <h3 id="blue-team-title" class="team-name">Équipe Bleue</h3>
+              <div id="blue-team-sub" class="team-sub">Blue Side • Faille de l'Invocateur</div>
+            </div>
+          </div>
+          <span id="blue-active-count" class="panel-badge cyan">0 / 5 Joueurs</span>
+        </div>
+
+        <!-- Bannière de Thème Équipe Bleue -->
+        <div id="blue-theme-banner" class="team-theme-banner hidden"></div>
+
+        <!-- Les 5 emplacements de joueurs -->
+        <div id="blue-slots-container" class="slots-container"></div>
+      </div>
+
+      <!-- SÉPARATEUR VS -->
+      <div id="vs-divider" class="vs-divider" aria-hidden="true">
+        <div class="vs-line"></div>
+        <div class="vs-medallion"><span>VS</span></div>
+        <div class="vs-line"></div>
+      </div>
+
+      <!-- ÉQUIPE ROUGE (5 SLOTS) -->
+      <div id="red-team-panel" class="hex-panel team-panel red-side">
+        <div class="team-header">
+          <div class="team-title-wrap">
+            <div class="team-emblem">R</div>
+            <div>
+              <h3 class="team-name">Équipe Rouge</h3>
+              <div class="team-sub">Red Side • Faille de l'Invocateur</div>
+            </div>
+          </div>
+          <span id="red-active-count" class="panel-badge">0 / 5 Joueurs</span>
+        </div>
+
+        <!-- Bannière de Thème Équipe Rouge -->
+        <div id="red-theme-banner" class="team-theme-banner hidden"></div>
+
+        <!-- Les 5 emplacements de joueurs -->
+        <div id="red-slots-container" class="slots-container"></div>
+      </div>
+
+    </section>
+
+    <!-- 5. CATALOGUE EXPLORABLE DES 26 COMPOS À THÈME -->
+    <section class="themes-drawer">
+      <button type="button" id="btn-toggle-catalog" class="drawer-toggle-btn">
+        <span>📖 Parcourir ou forcer une Compo à Thème (26 thèmes : Demacia, Noxus, Yordle, Néant, Tank, ADC, Grab, Knock-up...)</span>
+        <span class="drawer-arrow">▼ Afficher</span>
+      </button>
+      <div id="themes-catalog-grid" class="themes-catalog-grid hidden"></div>
+    </section>
+
+  </main>
+
+  <!-- Notification Toast -->
+  <div id="hex-toast" class="hex-toast" role="status" aria-live="polite"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/sound.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

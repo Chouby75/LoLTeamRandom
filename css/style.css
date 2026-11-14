@@ -1,0 +1,1313 @@
+/* ============================================================================
+   HEXTECH DARK THEME — DIRECTION ARTISTIQUE LEAGUE OF LEGENDS
+   Palette sombre anti-fatigue oculaire (#010A13 / #091428 / Or Hextech #C8AA6E)
+   ============================================================================ */
+
+:root {
+  /* Fonds Hextech ultra-sombres (doux pour les yeux) */
+  --bg-abyss: #010a13;
+  --bg-deep: #06101d;
+  --bg-panel: rgba(9, 20, 40, 0.88);
+  --bg-panel-solid: #091428;
+  --bg-card: rgba(13, 27, 48, 0.85);
+  --bg-card-hover: rgba(20, 40, 70, 0.95);
+  --bg-slot-empty: rgba(4, 11, 22, 0.72);
+
+  /* Or Hextech Métallique */
+  --gold-bright: #f0e6d2;
+  --gold-light: #c8aa6e;
+  --gold-main: #c89b3c;
+  --gold-Mid: #785a28;
+  --gold-dark: #463714;
+  --gold-border: rgba(200, 170, 110, 0.35);
+  --gold-border-strong: rgba(200, 170, 110, 0.75);
+
+  /* Magie Hextech & Équipes */
+  --hex-cyan: #0ac8b9;
+  --hex-cyan-dark: #005a82;
+  --hex-cyan-glow: rgba(10, 200, 185, 0.25);
+
+  --red-side: #e84057;
+  --red-side-dark: #701625;
+  --red-side-glow: rgba(232, 64, 87, 0.25);
+
+  /* Textes */
+  --text-main: #e6dfd3;
+  --text-muted: #948e80;
+  --text-dim: #5b5a56;
+
+  /* Polices */
+  --font-display: 'Cinzel', 'Beaufort for LOL', Georgia, serif;
+  --font-body: 'Rajdhani', 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  min-height: 100vh;
+  background-color: var(--bg-abyss);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.45;
+  overflow-x: hidden;
+  user-select: none;
+}
+
+/* Fond atmosphérique Hextech subtil */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at 18% 15%, rgba(0, 90, 130, 0.16) 0%, transparent 45%),
+    radial-gradient(circle at 82% 15%, rgba(140, 28, 48, 0.14) 0%, transparent 45%),
+    radial-gradient(circle at 50% 85%, rgba(200, 155, 60, 0.08) 0%, transparent 50%),
+    linear-gradient(180deg, #020c17 0%, #010810 100%);
+  pointer-events: none;
+  z-index: -2;
+}
+
+/* Trame géométrique Hextech en filigrane */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(200, 170, 110, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200, 170, 110, 0.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ============================================================================
+   HEADER HEXTECH
+   ============================================================================ */
+.hex-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: linear-gradient(180deg, rgba(1, 10, 19, 0.96) 0%, rgba(7, 18, 34, 0.92) 100%);
+  border-bottom: 1px solid var(--gold-Mid);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(10px);
+}
+
+.hex-header::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(520px, 80vw);
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold-light), var(--hex-cyan), var(--gold-light), transparent);
+}
+
+.header-inner {
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.brand-crest {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #132540, #071222);
+  border: 1.5px solid var(--gold-light);
+  transform: rotate(45deg);
+  box-shadow: 0 0 15px rgba(200, 170, 110, 0.25), inset 0 0 8px rgba(10, 200, 185, 0.25);
+}
+
+.brand-crest svg {
+  transform: rotate(-45deg);
+  width: 22px;
+  height: 22px;
+  color: var(--gold-light);
+}
+
+.brand-titles h1 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: linear-gradient(180deg, #f0e6d2 0%, #c8aa6e 60%, #937341 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.brand-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Sélecteur de Mode principal (Versus 2 Teams vs Draft 5 Joueurs) */
+.mode-tabs {
+  display: flex;
+  background: rgba(1, 10, 19, 0.85);
+  border: 1px solid var(--gold-Mid);
+  padding: 3px;
+  gap: 4px;
+}
+
+.mode-tab {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 0.5rem 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mode-tab:hover {
+  color: var(--gold-bright);
+  background: rgba(200, 170, 110, 0.08);
+}
+
+.mode-tab.active {
+  background: linear-gradient(180deg, rgba(30, 52, 82, 0.9) 0%, rgba(12, 26, 46, 0.95) 100%);
+  color: var(--gold-bright);
+  border-color: var(--gold-light);
+  box-shadow: 0 0 12px rgba(200, 170, 110, 0.2), inset 0 0 10px rgba(10, 200, 185, 0.15);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.btn-icon-hex {
+  background: rgba(12, 25, 45, 0.85);
+  border: 1px solid var(--gold-Mid);
+  color: var(--gold-light);
+  padding: 0.45rem 0.8rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.2s ease;
+}
+
+.btn-icon-hex:hover {
+  border-color: var(--gold-bright);
+  color: var(--gold-bright);
+  box-shadow: 0 0 10px rgba(200, 170, 110, 0.25);
+}
+
+/* ============================================================================
+   LAYOUT PRINCIPAL
+   ============================================================================ */
+.main-container {
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 1.25rem 1.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* Cadre Hextech générique */
+.hex-panel {
+  position: relative;
+  background: var(--bg-panel);
+  border: 1px solid var(--gold-border);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(240, 230, 210, 0.08);
+  padding: 1.15rem 1.35rem;
+}
+
+/* Coins dorés style Hextech */
+.hex-panel::before,
+.hex-panel::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: var(--gold-light);
+  pointer-events: none;
+}
+
+.hex-panel::before {
+  top: -1px;
+  left: -1px;
+  border-top: 2px solid var(--gold-light);
+  border-left: 2px solid var(--gold-light);
+}
+
+.hex-panel::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 2px solid var(--gold-light);
+  border-right: 2px solid var(--gold-light);
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid rgba(200, 170, 110, 0.2);
+  flex-wrap: wrap;
+}
+
+.panel-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.panel-diamond {
+  width: 9px;
+  height: 9px;
+  background: var(--gold-main);
+  transform: rotate(45deg);
+  box-shadow: 0 0 6px var(--gold-main);
+  flex-shrink: 0;
+}
+
+.panel-diamond.cyan {
+  background: var(--hex-cyan);
+  box-shadow: 0 0 8px var(--hex-cyan);
+}
+
+.panel-title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--gold-bright);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.panel-badge {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.15rem 0.6rem;
+  background: rgba(200, 170, 110, 0.14);
+  border: 1px solid rgba(200, 170, 110, 0.35);
+  color: var(--gold-light);
+  letter-spacing: 0.05em;
+}
+
+.panel-badge.cyan {
+  background: rgba(10, 200, 185, 0.14);
+  border-color: rgba(10, 200, 185, 0.45);
+  color: var(--hex-cyan);
+}
+
+/* ============================================================================
+   SECTION HAUTE : RÉSERVE DE PSEUDOS + FOURRE-TOUT (DRAG & DROP)
+   ============================================================================ */
+.top-staging-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 1.25rem;
+}
+
+@media (max-width: 1024px) {
+  .top-staging-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.staging-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* Barre d'ajout rapide d'un pseudo */
+.add-player-bar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.85rem;
+}
+
+.hex-input {
+  flex: 1;
+  background: rgba(2, 9, 18, 0.9);
+  border: 1px solid var(--gold-Mid);
+  color: var(--gold-bright);
+  padding: 0.5rem 0.85rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 500;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.hex-input::placeholder {
+  color: var(--text-dim);
+}
+
+.hex-input:focus {
+  border-color: var(--hex-cyan);
+  box-shadow: 0 0 10px rgba(10, 200, 185, 0.2);
+}
+
+.btn-hex-sm {
+  background: linear-gradient(180deg, #1a2c46 0%, #0d1a2d 100%);
+  border: 1px solid var(--gold-Mid);
+  color: var(--gold-light);
+  padding: 0.42rem 0.78rem;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.btn-hex-sm:hover {
+  border-color: var(--gold-bright);
+  color: var(--gold-bright);
+  background: linear-gradient(180deg, #243c5e 0%, #132540 100%);
+}
+
+.btn-hex-sm.cyan {
+  background: linear-gradient(180deg, #094a63 0%, #052838 100%);
+  border-color: var(--hex-cyan);
+  color: #d8fffa;
+}
+
+.btn-hex-sm.cyan:hover {
+  box-shadow: 0 0 12px rgba(10, 200, 185, 0.35);
+}
+
+.btn-hex-sm.danger:hover {
+  border-color: var(--red-side);
+  color: #ff9aa8;
+}
+
+/* Zones de drop (Réserve & Fourre-tout) */
+.drop-zone {
+  min-height: 155px;
+  background: rgba(2, 8, 16, 0.72);
+  border: 1.5px dashed rgba(200, 170, 110, 0.28);
+  padding: 0.85rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 0.55rem;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.drop-zone.fourre-tout-zone {
+  border-color: rgba(10, 200, 185, 0.4);
+  background:
+    radial-gradient(circle at center, rgba(10, 200, 185, 0.06) 0%, rgba(2, 8, 16, 0.8) 75%);
+  min-height: 198px;
+}
+
+.drop-zone.drag-over {
+  border-style: solid;
+  border-color: var(--hex-cyan);
+  background: rgba(10, 200, 185, 0.12);
+  box-shadow: inset 0 0 24px rgba(10, 200, 185, 0.22);
+}
+
+.drop-empty-hint {
+  width: 100%;
+  min-height: 130px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.92rem;
+  pointer-events: none;
+  gap: 0.35rem;
+}
+
+.drop-empty-hint strong {
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* Jeton / Chip de Pseudo (Draggable + Cliquable) */
+.player-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #13233b 0%, #0b1628 100%);
+  border: 1px solid var(--gold-Mid);
+  color: var(--gold-bright);
+  padding: 0.42rem 0.75rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: grab;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  position: relative;
+}
+
+.player-chip:hover {
+  transform: translateY(-2px);
+  border-color: var(--gold-light);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), 0 0 8px rgba(200, 170, 110, 0.25);
+}
+
+.player-chip:active {
+  cursor: grabbing;
+}
+
+.player-chip.dragging {
+  opacity: 0.4;
+  transform: scale(0.95);
+}
+
+/* Style spécifique quand le pseudo est dans le Fourre-Tout */
+.fourre-tout-zone .player-chip {
+  background: linear-gradient(135deg, #0b2d3d 0%, #081c2b 100%);
+  border-color: rgba(10, 200, 185, 0.65);
+  box-shadow: 0 2px 10px rgba(10, 200, 185, 0.15);
+}
+
+.fourre-tout-zone .player-chip:hover {
+  border-color: #64fff2;
+  box-shadow: 0 4px 14px rgba(10, 200, 185, 0.32);
+}
+
+.chip-avatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #1e3b5c 0%, #091426 100%);
+  border: 1px solid var(--gold-light);
+  display: inline-grid;
+  place-items: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--gold-light);
+  flex-shrink: 0;
+}
+
+.fourre-tout-zone .chip-avatar {
+  border-color: var(--hex-cyan);
+  color: var(--hex-cyan);
+}
+
+.chip-remove-db {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0 2px;
+  margin-left: 2px;
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.chip-remove-db:hover {
+  color: var(--red-side);
+}
+
+.staging-footer-tip {
+  margin-top: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.matchup-preview-pill {
+  color: var(--hex-cyan);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+/* ============================================================================
+   BARRE "PIMENTER LA PARTIE" (OPTIONS & BOUTON LANCER L'ALÉATOIRE)
+   ============================================================================ */
+.spice-control-panel {
+  background: linear-gradient(180deg, rgba(12, 25, 46, 0.94) 0%, rgba(7, 15, 29, 0.96) 100%);
+  border: 1px solid var(--gold-Mid);
+}
+
+.spice-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+@media (max-width: 980px) {
+  .spice-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.spice-options-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: stretch;
+}
+
+/* Cartes d'options à cocher style Hextech */
+.spice-toggle-card {
+  flex: 1 1 200px;
+  background: rgba(4, 12, 24, 0.78);
+  border: 1px solid rgba(200, 170, 110, 0.28);
+  padding: 0.7rem 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.spice-toggle-card:hover {
+  border-color: var(--gold-light);
+  background: rgba(14, 29, 52, 0.85);
+}
+
+.spice-toggle-card.active {
+  background: linear-gradient(135deg, rgba(10, 200, 185, 0.14) 0%, rgba(200, 155, 60, 0.12) 100%);
+  border-color: var(--gold-light);
+  box-shadow: 0 0 15px rgba(200, 170, 110, 0.18), inset 0 0 12px rgba(10, 200, 185, 0.1);
+}
+
+.spice-checkbox {
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid var(--gold-Mid);
+  background: #020810;
+  display: grid;
+  place-items: center;
+  margin-top: 2px;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.spice-toggle-card.active .spice-checkbox {
+  border-color: var(--hex-cyan);
+  background: rgba(10, 200, 185, 0.22);
+  box-shadow: 0 0 8px rgba(10, 200, 185, 0.45);
+}
+
+.spice-checkbox::after {
+  content: "";
+  width: 9px;
+  height: 9px;
+  background: var(--hex-cyan);
+  transform: rotate(45deg) scale(0);
+  transition: transform 0.18s ease;
+}
+
+.spice-toggle-card.active .spice-checkbox::after {
+  transform: rotate(45deg) scale(1);
+}
+
+.spice-card-text h4 {
+  font-family: var(--font-display);
+  font-size: 0.86rem;
+  color: var(--gold-bright);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 0.15rem;
+}
+
+.spice-card-text p {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.3;
+}
+
+/* Sous-barre de filtres de thème (visible quand Compo à Thème est activé) */
+.theme-subsettings {
+  margin-top: 0.85rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(200, 170, 110, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.theme-subsettings.hidden {
+  display: none;
+}
+
+.filter-pill-group {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.filter-label {
+  font-size: 0.8rem;
+  color: var(--gold-light);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  margin-right: 0.25rem;
+}
+
+.filter-pill {
+  background: rgba(3, 10, 20, 0.85);
+  border: 1px solid rgba(200, 170, 110, 0.3);
+  color: var(--text-muted);
+  padding: 0.28rem 0.68rem;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.filter-pill.active {
+  background: rgba(200, 155, 60, 0.22);
+  border-color: var(--gold-light);
+  color: var(--gold-bright);
+}
+
+/* GROS BOUTON HEXTECH "TROUVER UN MATCH / ALÉATOIRE" */
+.cta-forge-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.5rem;
+  min-width: 270px;
+}
+
+.btn-hex-forge {
+  position: relative;
+  background: linear-gradient(180deg, #163854 0%, #091f36 55%, #061526 100%);
+  border: 2px solid var(--gold-light);
+  color: var(--gold-bright);
+  font-family: var(--font-display);
+  font-size: 1.12rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 1rem 1.75rem;
+  cursor: pointer;
+  box-shadow:
+    0 0 24px rgba(10, 200, 185, 0.25),
+    inset 0 0 18px rgba(10, 200, 185, 0.22);
+  transition: all 0.22s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  overflow: hidden;
+}
+
+.btn-hex-forge::before {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border: 1px solid rgba(10, 200, 185, 0.45);
+  pointer-events: none;
+}
+
+.btn-hex-forge:hover {
+  background: linear-gradient(180deg, #1d4d73 0%, #0d2e4f 55%, #081e36 100%);
+  border-color: #fff3d6;
+  box-shadow:
+    0 0 32px rgba(10, 200, 185, 0.5),
+    0 0 15px rgba(200, 170, 110, 0.4),
+    inset 0 0 24px rgba(10, 200, 185, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-hex-forge:active {
+  transform: translateY(1px);
+}
+
+.btn-hex-forge.rolling {
+  animation: pulseForge 0.35s infinite alternate;
+}
+
+@keyframes pulseForge {
+  from {
+    box-shadow: 0 0 20px rgba(10, 200, 185, 0.4);
+  }
+  to {
+    box-shadow: 0 0 40px rgba(200, 170, 110, 0.75);
+  }
+}
+
+.secondary-actions-row {
+  display: flex;
+  gap: 0.45rem;
+}
+
+.secondary-actions-row button {
+  flex: 1;
+  justify-content: center;
+}
+
+/* ============================================================================
+   BANNIÈRE DÉFI DE PARTIE GLOBAL (SI ACTIVÉ)
+   ============================================================================ */
+.global-challenge-banner {
+  background: linear-gradient(90deg, rgba(70, 55, 20, 0.35) 0%, rgba(20, 35, 60, 0.88) 50%, rgba(70, 55, 20, 0.35) 100%);
+  border: 1px solid var(--gold-light);
+  padding: 0.85rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  animation: fadeSlideIn 0.35s ease;
+}
+
+.global-challenge-banner.hidden {
+  display: none;
+}
+
+.challenge-content {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.challenge-icon {
+  width: 40px;
+  height: 40px;
+  background: rgba(200, 155, 60, 0.2);
+  border: 1px solid var(--gold-light);
+  display: grid;
+  place-items: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.challenge-text h4 {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  color: var(--gold-light);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.challenge-text p {
+  font-size: 0.9rem;
+  color: var(--gold-bright);
+}
+
+/* ============================================================================
+   ARÈNE DES ÉQUIPES : BLUE SIDE (5 SLOTS) VS RED SIDE (5 SLOTS)
+   ============================================================================ */
+.arena-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 1.15rem;
+  align-items: stretch;
+}
+
+.arena-grid.single-squad-mode {
+  grid-template-columns: 1fr;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+@media (max-width: 1060px) {
+  .arena-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.team-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  transition: all 0.3s ease;
+}
+
+.team-panel.blue-side {
+  border-top: 3px solid var(--hex-cyan);
+  background: linear-gradient(180deg, rgba(0, 90, 130, 0.16) 0%, var(--bg-panel) 28%);
+}
+
+.team-panel.red-side {
+  border-top: 3px solid var(--red-side);
+  background: linear-gradient(180deg, rgba(160, 25, 45, 0.16) 0%, var(--bg-panel) 28%);
+}
+
+.team-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid rgba(200, 170, 110, 0.2);
+}
+
+.team-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.team-emblem {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid;
+  font-weight: 700;
+}
+
+.blue-side .team-emblem {
+  background: rgba(10, 200, 185, 0.15);
+  border-color: var(--hex-cyan);
+  color: var(--hex-cyan);
+  box-shadow: 0 0 12px var(--hex-cyan-glow);
+}
+
+.red-side .team-emblem {
+  background: rgba(232, 64, 87, 0.15);
+  border-color: var(--red-side);
+  color: var(--red-side);
+  box-shadow: 0 0 12px var(--red-side-glow);
+}
+
+.team-name {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.blue-side .team-name {
+  color: #8afff4;
+}
+
+.red-side .team-name {
+  color: #ff8e9e;
+}
+
+.team-sub {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* CARTE DE COMPOSITIONS À THÈME D'UNE ÉQUIPE */
+.team-theme-banner {
+  background: rgba(3, 10, 20, 0.86);
+  border: 1px solid var(--gold-Mid);
+  border-left: 4px solid var(--gold-light);
+  padding: 0.75rem 0.95rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  animation: fadeSlideIn 0.35s ease;
+}
+
+.team-theme-banner.hidden {
+  display: none;
+}
+
+.theme-banner-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.theme-title-line {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.theme-icon-lg {
+  font-size: 1.3rem;
+}
+
+.theme-name-txt {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--gold-bright);
+  letter-spacing: 0.04em;
+}
+
+.theme-cat-tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.1rem 0.45rem;
+  background: rgba(200, 170, 110, 0.16);
+  border: 1px solid rgba(200, 170, 110, 0.4);
+  color: var(--gold-light);
+}
+
+.theme-desc-txt {
+  font-size: 0.83rem;
+  color: var(--text-main);
+}
+
+.theme-champ-pool {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.15rem;
+}
+
+.champ-mini-tag {
+  font-size: 0.73rem;
+  padding: 0.1rem 0.45rem;
+  background: rgba(16, 33, 58, 0.9);
+  border: 1px solid rgba(200, 170, 110, 0.25);
+  color: var(--gold-light);
+}
+
+/* LISTE DES 5 SLOTS DE JOUEURS PAR ÉQUIPE */
+.slots-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.team-slot {
+  min-height: 64px;
+  background: var(--bg-slot-empty);
+  border: 1px solid rgba(200, 170, 110, 0.2);
+  padding: 0.55rem 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  transition: all 0.22s ease;
+  position: relative;
+}
+
+.team-slot.filled {
+  background: linear-gradient(90deg, rgba(16, 34, 60, 0.92) 0%, rgba(9, 20, 38, 0.92) 100%);
+  border-color: rgba(200, 170, 110, 0.45);
+  animation: slotPopIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+.blue-side .team-slot.filled {
+  border-left: 3px solid var(--hex-cyan);
+}
+
+.red-side .team-slot.filled {
+  border-left: 3px solid var(--red-side);
+}
+
+.team-slot.drag-over {
+  border-color: var(--gold-bright);
+  box-shadow: inset 0 0 15px rgba(200, 170, 110, 0.35);
+}
+
+@keyframes slotPopIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slot-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+/* Médaille de Rôle (Top, Jgl, Mid, Bot, Supp) ou numéro de slot */
+.slot-role-badge {
+  width: 38px;
+  height: 38px;
+  background: #040c18;
+  border: 1px solid var(--gold-Mid);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  color: var(--gold-light);
+  position: relative;
+}
+
+.slot-role-badge svg {
+  width: 21px;
+  height: 21px;
+}
+
+.slot-number-only {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-dim);
+}
+
+.slot-player-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.slot-player-name-row {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.slot-player-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--gold-bright);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.slot-empty-label {
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+.captain-crown {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.08rem 0.42rem;
+  background: rgba(240, 180, 40, 0.2);
+  border: 1px solid var(--gold-light);
+  color: #ffd970;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.slot-role-label {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Suggestion de Champion aléatoire à droite du slot */
+.slot-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.suggested-champ-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(3, 11, 23, 0.92);
+  border: 1px solid rgba(200, 170, 110, 0.4);
+  padding: 0.25rem 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--gold-light);
+}
+
+.reroll-champ-btn {
+  background: transparent;
+  border: 1px solid rgba(200, 170, 110, 0.3);
+  color: var(--text-muted);
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  font-size: 0.78rem;
+  transition: all 0.15s;
+}
+
+.reroll-champ-btn:hover {
+  border-color: var(--gold-bright);
+  color: var(--gold-bright);
+}
+
+/* COLONNE VS AU CENTRE */
+.vs-divider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0 0.2rem;
+}
+
+@media (max-width: 1060px) {
+  .vs-divider {
+    flex-direction: row;
+    padding: 0.25rem 0;
+  }
+}
+
+.vs-line {
+  width: 1px;
+  flex: 1;
+  background: linear-gradient(180deg, transparent, var(--gold-Mid), transparent);
+}
+
+@media (max-width: 1060px) {
+  .vs-line {
+    height: 1px;
+    width: auto;
+    background: linear-gradient(90deg, transparent, var(--gold-Mid), transparent);
+  }
+}
+
+.vs-medallion {
+  width: 54px;
+  height: 54px;
+  background: radial-gradient(circle, #182b49 0%, #071120 100%);
+  border: 2px solid var(--gold-light);
+  transform: rotate(45deg);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 0 20px rgba(200, 170, 110, 0.3);
+  flex-shrink: 0;
+}
+
+.vs-medallion span {
+  transform: rotate(-45deg);
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--gold-bright);
+  letter-spacing: 0.06em;
+}
+
+/* ============================================================================
+   CATALOGUE DES THÈMES (MODAL OU TIROIR D'EXPLORATION / SÉLECTION FORCÉE)
+   ============================================================================ */
+.themes-drawer {
+  margin-top: 0.5rem;
+}
+
+.drawer-toggle-btn {
+  width: 100%;
+  background: rgba(9, 20, 40, 0.75);
+  border: 1px solid rgba(200, 170, 110, 0.28);
+  color: var(--gold-light);
+  padding: 0.7rem 1.2rem;
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.2s;
+}
+
+.drawer-toggle-btn:hover {
+  border-color: var(--gold-light);
+  background: rgba(15, 32, 58, 0.9);
+}
+
+.themes-catalog-grid {
+  margin-top: 0.75rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
+  gap: 0.75rem;
+}
+
+.themes-catalog-grid.hidden {
+  display: none;
+}
+
+.catalog-theme-card {
+  background: rgba(7, 16, 30, 0.9);
+  border: 1px solid rgba(200, 170, 110, 0.25);
+  padding: 0.8rem 0.95rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  transition: all 0.2s;
+}
+
+.catalog-theme-card:hover {
+  border-color: var(--gold-light);
+  transform: translateY(-2px);
+}
+
+/* Toast de notification (Copié pour Discord, etc.) */
+.hex-toast {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 100;
+  background: linear-gradient(135deg, #0d273d 0%, #071525 100%);
+  border: 1.5px solid var(--hex-cyan);
+  color: var(--gold-bright);
+  padding: 0.8rem 1.25rem;
+  font-weight: 600;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.75), 0 0 15px rgba(10, 200, 185, 0.35);
+  transform: translateY(120%);
+  opacity: 0;
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hex-toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
